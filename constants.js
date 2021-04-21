@@ -1,4 +1,4 @@
-const __prod__ = !process.env.NODE_ENV === "development";
+const __prod__ = process.env.NODE_ENV !== "development";
 
 const url = __prod__
   ? process.env.HOST_URL

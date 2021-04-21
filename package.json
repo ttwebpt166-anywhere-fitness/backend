@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "dev:migrate:up": "knex --env development migrate:up",
-    "start:migrate": "knex migrate:up",
+    "start:migrate": "knex --env production migrate:up",
     "start:run": "node index.js",
     "start": "concurrently npm:start:*"
   },
@@ -28,6 +28,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "heroku": "^7.52.0",
     "ioredis": "^4.26.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
