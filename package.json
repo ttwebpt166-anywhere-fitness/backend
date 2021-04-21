@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon index.js",
     "dev:migrate:up": "knex --env development migrate:up",
-    "start": "knex --env production migrate:up && node index.js"
+    "start:migrate": "knex migrate:up",
+    "start:run": "node index.js",
+    "start": "concurrently npm:start:*"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   "homepage": "https://github.com/ttwebpt166-anywhere-fitness/backend#readme",
   "dependencies": {
     "argon2": "^0.27.2",
+    "concurrently": "^6.0.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
