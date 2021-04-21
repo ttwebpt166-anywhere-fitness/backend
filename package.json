@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/ttwebpt166-anywhere-fitness/backend#readme",
   "dependencies": {
-    "@heroku/buildpack-registry": "^1.0.1",
     "argon2": "^0.27.2",
     "concurrently": "^6.0.2",
     "cors": "^2.8.5",
@@ -37,7 +36,6 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "heroku": "^7.52.0",
     "nodemon": "^2.0.7"
   }
 }
