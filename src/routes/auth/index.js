@@ -45,14 +45,18 @@ auth.get("/login", checkRegBody, userExist, async (req, res) => {
     req.user.password,
     req.body.password
   );
+
+  const { id } = req.user;
+
   if (!isPswdVerified) {
     res.status(400).json({ error: { message: "Invalid Credentials" } });
     return;
   }
 
-  const token = jwt.sign({ userId: req.user.id }, process.env.TOKEN_SECRET, {
+  const token = jwt.sign({ userId: id }, process.env.TOKEN_SECRET, {
     expiresIn: "24h",
   });
+  req.session.userId = id;
   res.json({ user: userReturn(req.user), token });
 });
 

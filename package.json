@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "set NODE_ENV=development && nodemon index.js",
     "dev:migrate:up": "knex --env development migrate:up",
     "dev-live:migrate": "knex --env staging migrate:latest",
     "dev-live:run": "set NODE_ENV=staging && nodemon index.js",
@@ -26,6 +26,7 @@
   "dependencies": {
     "argon2": "^0.27.2",
     "concurrently": "^6.0.2",
+    "connect-redis": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
