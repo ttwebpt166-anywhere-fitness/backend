@@ -25,10 +25,16 @@ auth.post("/register", checkRegBody, async (req, res) => {
     });
     res.json({ user: userReturn(user), token });
   } catch (error) {
-    if (error.errno === 19 || error.code.includes("SQLITE_CONSTRAINT")) {
+    if (
+      error.errno === 19 ||
+      error.code.includes("SQLITE_CONSTRAINT") ||
+      error.code == 23505 ||
+      error.detail.includes("already exists")
+    ) {
       res.status(500).json({ error: { message: "Username is taken" } });
       return;
     }
+
     console.log(error);
     return;
   }

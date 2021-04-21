@@ -17,13 +17,14 @@ module.exports = {
 
   staging: {
     client: "pg",
-    connection: process.env.DATABASE_URL,
+    connection: { connectionString: process.env.DATABASE_URL, ssl: true },
+    useNullAsDefault: true,
     debug: true,
     pool: {
       min: 2,
       max: 10,
     },
-    searchPath: "knex,public",
+    searchPath: ["knex", "public"],
     migrations: {
       directory: "src/data/migrations",
     },
