@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "nodemon index.js",
     "dev:migrate:up": "knex --env development migrate:up",
-    "start:migrate": "knex --env production migrate:up",
-    "start:run": "node index.js",
-    "start": "concurrently npm:start:*"
+    "dev-live:migrate": "knex --env staging migrate:latest",
+    "dev-live:run": "set NODE_ENV=staging && nodemon index.js",
+    "dev-live": "concurrently npm:dev-live:*",
+    "start:test": "set NODE_ENV=production && node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

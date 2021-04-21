@@ -48,7 +48,6 @@ const checkRegBody = (req, res, next) => {
 
 const userExist = async (req, res, next) => {
   const user = await findUser(req.body.username.toLowerCase());
-
   if (!user.username) {
     res.status(400).json({ error: { message: "User doesn't exist" } });
     return;
