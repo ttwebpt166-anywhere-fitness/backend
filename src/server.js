@@ -34,8 +34,8 @@ app.use(
     },
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    store: new RedisStore({ client: redis, disableTouch: true }),
+    saveUninitialized: true,
+    store: new RedisStore({ client: redis, disableTouch: false }),
   })
 );
 
