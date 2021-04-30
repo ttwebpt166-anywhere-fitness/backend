@@ -19,28 +19,37 @@ auth.post("/register", checkRegBody, async (req, res) => {
   requireDetails.account_type = isTeacher ? "teacher" : "student";
   try {
     let user = await createUser(requireDetails);
-    user = await findUser(user[0]);
+    user = await findUser(
+      !!user[0] && typeof user[0] === "number"
+        ? user[0]
+        : requireDetails.username
+    );
+    console.log("User: ", user);
     const token = jwt.sign({ userId: user.id }, process.env.TOKEN_SECRET, {
       expiresIn: "24h",
     });
+    req.session.userId = user.id;
     res.json({ user: userReturn(user), token });
   } catch (error) {
     if (
       error.errno === 19 ||
-      error.code.includes("SQLITE_CONSTRAINT") ||
       error.code == 23505 ||
-      error.detail.includes("already exists")
+      (typeof error.detail === "string" &&
+        error.detail.includes("already exists"))
     ) {
       res.status(500).json({ error: { message: "Username is taken" } });
       return;
     }
-
+    res.status(501).json({
+      message:
+        "The user might have been made, but an error happened when sending it back to you",
+    });
     console.log(error);
     return;
   }
 });
 
-auth.get("/login", checkRegBody, userExist, async (req, res) => {
+auth.post("/login", checkRegBody, userExist, async (req, res) => {
   const isPswdVerified = await argon.verify(
     req.user.password,
     req.body.password

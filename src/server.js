@@ -25,19 +25,20 @@ const redis = Redis.createClient(process.env.REDIS_URL);
 app.use(cors());
 app.use(express.json());
 app.use(
-    session({
-        name: "qid",
-        cookie: {
-            maxAge: 1000 * 30 * 60 * 60 * 24,
-            httpOnly: true,
-            sameSite: "lax",
-            secure: __prod__,
-        },
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: new RedisStore({ client: redis, disableTouch: true }),
-    })
+  session({
+    name: "qid",
+    cookie: {
+      maxAge: 1000 * 30 * 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: __prod__,
+    },
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: new RedisStore({ client: redis, disableTouch: false }),
+  })
+
 );
 
 app.use("/v1/auth", auth);
