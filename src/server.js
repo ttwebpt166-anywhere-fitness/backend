@@ -1,3 +1,4 @@
+
 const express = require("express");
 const dotenv = require("dotenv").config();
 const Express = require("express");
@@ -11,11 +12,12 @@ const connectRedis = require("connect-redis");
 const Redis = require("redis");
 const { __prod__ } = require("../constants");
 const checkSession = require("./middleware/checkSession");
+const classHandler = require("./routes/classes");
 
 const app = Express();
 
 if (process.env.NODE_ENV !== "production") {
-  app.use(logger);
+    app.use(logger);
 }
 
 const RedisStore = connectRedis(session);
@@ -37,9 +39,11 @@ app.use(
     saveUninitialized: true,
     store: new RedisStore({ client: redis, disableTouch: false }),
   })
+
 );
 
 app.use("/v1/auth", auth);
 app.use("/v1/", checkSession, validateJwt, root);
+app.use("/v1/class", checkSession, validateJwt, classHandler);
 
 module.exports = app;
