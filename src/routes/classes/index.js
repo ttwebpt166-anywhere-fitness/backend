@@ -37,6 +37,7 @@ classHandler.get("/:id", (req, res) => {
       }
     })
     .catch((err) => {
+      console.warn(err);
       res.status(500).json({ message: "cannot find classes" });
     });
 });

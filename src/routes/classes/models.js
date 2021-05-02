@@ -1,8 +1,10 @@
 const db = require("../../data/dbConfig");
 const { __prod__ } = require("../../../constants");
 
-const getClass = async (classes) => {
-  return await db("classes");
+const getClass = async () => {
+  return await db("classes")
+    .join("users", "users.id", "classes.instructor_id")
+    .select("classes.*", "users.username as teacher");
 };
 
 // const createClass = async(classInput) => {
@@ -10,7 +12,11 @@ const getClass = async (classes) => {
 // };
 
 const findClass = async (id) => {
-  return await db("classes").where({ id }).first();
+  return await db("classes as cl")
+    .where("cl.id", id)
+    .join("users as t", "t.id", "cl.instructor_id")
+    .select("cl.*", "t.username as teacher")
+    .first();
 };
 
 const addClass = async (classes) => {
