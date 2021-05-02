@@ -1,4 +1,3 @@
-
 const express = require("express");
 const dotenv = require("dotenv").config();
 const Express = require("express");
@@ -17,7 +16,7 @@ const classHandler = require("./routes/classes");
 const app = Express();
 
 if (process.env.NODE_ENV !== "production") {
-    app.use(logger);
+  app.use(logger);
 }
 
 const RedisStore = connectRedis(session);
@@ -33,13 +32,13 @@ app.use(
       httpOnly: true,
       sameSite: "lax",
       secure: __prod__,
+      domain: "https://anytime.vercel.app/",
     },
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: new RedisStore({ client: redis, disableTouch: false }),
   })
-
 );
 
 app.use("/v1/auth", auth);

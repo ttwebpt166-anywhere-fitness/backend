@@ -5,6 +5,15 @@ const { findUser } = require("../routes/auth/models");
 module.exports = async (req, res, next) => {
   if (!req.user?.username) {
     const { authorization } = req.headers;
+    if (!authorization) {
+      res.status(404).json({
+        error: {
+          message: "Not Authorized",
+          redirectLink: `${url}/auth/login`,
+        },
+      });
+      return;
+    }
     const token = authorization.split(" ")[1];
     if (!token) {
       res.status(404).json({
